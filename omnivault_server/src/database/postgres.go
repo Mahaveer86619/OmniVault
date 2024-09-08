@@ -35,11 +35,16 @@ func CloseDBConnection(conn *sql.DB) {
 
 func CreateTables(conn *sql.DB) error {
 	queries := []string{
+		`CREATE TABLE IF NOT EXISTS auth (
+  			id UUID PRIMARY KEY,
+  			name TEXT UNIQUE NOT NULL,
+  			email TEXT UNIQUE NOT NULL,
+  			password TEXT NOT NULL
+		);`,
 		`CREATE TABLE IF NOT EXISTS profiles (
   			id UUID PRIMARY KEY,
   			name TEXT UNIQUE NOT NULL,
   			email TEXT UNIQUE NOT NULL,
-  			password TEXT NOT NULL,
   			profile_pic TEXT,
   			created_at TEXT,
   			updated_at TEXT
