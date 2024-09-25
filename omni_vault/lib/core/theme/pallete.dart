@@ -12,13 +12,13 @@ class Pallete {
   static const Color gradient2 = Color.fromRGBO(251, 109, 169, 1);
   static const Color gradient3 = Color.fromRGBO(255, 159, 124, 1);
 
-  static const Color whiteColor = Colors.white;
+  static const Color appBarColor = Color(0xFF302F34);
   static const Color greyColor = Colors.grey;
   static const Color successColor = Colors.green;
   static const Color errorColor = Colors.redAccent;
   static const Color transparentColor = Colors.transparent;
 
-  static const Color surface = Color(0xFF3B3B3B);
+  static const Color surface = Color(0xFF212124);
   static const Color onSurface = Color(0xFFE2E2EA);
   static const Color background = Color(0xFF1B1B1F);
   static const Color onBackground = Color(0xFFE2E2EA);
