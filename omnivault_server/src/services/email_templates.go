@@ -7,7 +7,7 @@ func GenerateWelcomeHTML(recipientEmail string) string {
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Welcome to Omni Vault, %s</title>
+        <title>Welcome to OmniVault, %s</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -98,7 +98,7 @@ func GeneratePasswordResetHTML(code string, recipientEmail string) string {
         <div class="card">
             <div class="card-header">Password Reset</div>
             <div class="card-body">
-                <p class="card-text">Hello from Omni Vault,</p>
+                <p class="card-text">Hello from OmniVault, </p>
                 <p class="card-text">Your requested password reset code is: <strong>%s</strong></p>
                 <p class="card-text">If you did not request this code, please ignore this email.</p>
             </div>

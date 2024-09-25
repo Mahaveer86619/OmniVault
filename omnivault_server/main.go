@@ -79,12 +79,13 @@ func handleFunctions(mux *http.ServeMux) {
 	mux.HandleFunc("POST /api/v1/auth/forgot_password", middleware.LoggingMiddleware(handlers.SendPassResetCodeController))
 	mux.HandleFunc("POST /api/v1/auth/check_code", middleware.LoggingMiddleware(handlers.CheckResetPassCodeController))
 	mux.HandleFunc("POST /api/v1/auth/refresh", middleware.LoggingMiddleware(handlers.RefreshTokenController))
-	//* Auth routes website ...
 
 	//* User routes
-	mux.HandleFunc("GET /api/v1/users", middleware.LoggingMiddleware(handlers.GetUserByIDController))
-	mux.HandleFunc("PUT /api/v1/users", middleware.LoggingMiddleware(handlers.UpdateUserController))
-	mux.HandleFunc("DELETE /api/v1/users", middleware.LoggingMiddleware(handlers.DeleteUserController))
+	mux.Handle("GET /api/v1/users", middleware.AuthMiddleware(http.HandlerFunc(handlers.GetUserByIDController)))
+	mux.Handle("PUT /api/v1/users", middleware.LoggingMiddleware(handlers.UpdateUserController))
+	mux.Handle("DELETE /api/v1/users", middleware.LoggingMiddleware(handlers.DeleteUserController))
+
+	//* File uploading route
 
 	//* Admin routes
 	mux.HandleFunc("GET /api/v1/admin/users", middleware.LoggingMiddleware(handlers.GetAllUsersController))

@@ -1,4 +1,5 @@
 **.env
 **todo.txt
-/omnivault_server/db_data
+/omnivault_server/secrets
+/omnivault_server/src/services/firebase-key.json
 .vscode
