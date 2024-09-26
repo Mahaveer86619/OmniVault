@@ -82,10 +82,11 @@ func handleFunctions(mux *http.ServeMux) {
 
 	//* User routes
 	mux.Handle("GET /api/v1/users", middleware.AuthMiddleware(http.HandlerFunc(handlers.GetUserByIDController)))
-	mux.Handle("PUT /api/v1/users", middleware.LoggingMiddleware(handlers.UpdateUserController))
-	mux.Handle("DELETE /api/v1/users", middleware.LoggingMiddleware(handlers.DeleteUserController))
+	mux.Handle("PUT /api/v1/users", middleware.AuthMiddleware(http.HandlerFunc(handlers.UpdateUserController)))
+	mux.Handle("DELETE /api/v1/users", middleware.AuthMiddleware(http.HandlerFunc(handlers.DeleteUserController)))
 
-	//* File uploading route
+	//* Notes routes
+	// mux.Handle("GET /api/v1/notes", middleware.AuthMiddleware(http.HandlerFunc(handlers.GetAllNotesController)))
 
 	//* Admin routes
 	mux.HandleFunc("GET /api/v1/admin/users", middleware.LoggingMiddleware(handlers.GetAllUsersController))

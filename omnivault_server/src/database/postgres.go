@@ -59,6 +59,8 @@ func CreateTables(conn *sql.DB) error {
 			user_id UUID REFERENCES profiles(id) NOT NULL,
 			title TEXT NOT NULL,
 			content TEXT,
+			color TEXT NOT NULL,
+			tags TEXT,
 			cover_image_url TEXT,
   			created_at TEXT,
   			updated_at TEXT
