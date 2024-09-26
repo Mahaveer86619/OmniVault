@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:omni_vault/common/app_user/app_user_cubit.dart';
 import 'package:omni_vault/common/bottom_app_bar/bloc/navigation_bloc.dart';
 import 'package:omni_vault/common/repository/app_user_repo.dart';
+import 'package:omni_vault/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:omni_vault/features/notes/presentation/bloc/notes_bloc.dart';
 import 'package:omni_vault/features/secrets/presentation/bloc/secrets_bloc.dart';
 import 'package:omni_vault/features/settings/presentation/bloc/settings_bloc.dart';
@@ -63,6 +64,13 @@ void repositories() async {}
 void useCases() async {}
 
 void blocs() async {
+  //* Register AuthBloc
+  sl.registerLazySingleton<AuthBloc>(
+    () => AuthBloc(
+      appUserCubit: sl(),
+      logger: sl(),
+    ),
+  );
   //* Register NotesBloc
   sl.registerLazySingleton<NotesBloc>(
     () => NotesBloc(

@@ -1,4 +1,4 @@
-package Implementations
+package implementations
 
 import (
 	"database/sql"
@@ -105,43 +105,46 @@ func RegisterUser(credentials *types.RegisteringCredentials) (*types.UserRespons
 		}
 	}
 
+	// User already registered
+	if !userNotFound {
+		return nil, http.StatusInternalServerError, fmt.Errorf("user is already registerd with email: %s", credentials.Email)
+	}
+
 	var user types.User
 	user.ID = uuid.New().String()
 
 	// Create user
-	if userNotFound {
-		_, err := conn.Exec(
-			insert_query_auth,
-			user.ID,
-			credentials.Name,
-			credentials.Email,
-			credentials.Password,
-		)
+	_, err = conn.Exec(
+		insert_query_auth,
+		user.ID,
+		credentials.Name,
+		credentials.Email,
+		credentials.Password,
+	)
 
-		if err != nil {
-			return nil, http.StatusInternalServerError, fmt.Errorf("error creating user in auth: %w", err)
-		}
+	if err != nil {
+		return nil, http.StatusInternalServerError, fmt.Errorf("error creating user in auth: %w", err)
+	}
 
-		err = conn.QueryRow(
-			insert_query_profiles,
-			user.ID,
-			credentials.Name,
-			credentials.Email,
-			"",
-			helpers.GetCurrentDateTimeAsString(),
-			helpers.GetCurrentDateTimeAsString(),
-		).Scan(
-			&user.ID,
-			&user.Name,
-			&user.Email,
-			&user.ProfilePic,
-			&user.CreatedAt,
-			&user.UpdatedAt,
-		)
+	err = conn.QueryRow(
+		insert_query_profiles,
+		user.ID,
+		credentials.Name,
+		credentials.Email,
+		"",
+		helpers.GetCurrentDateTimeAsString(),
+		helpers.GetCurrentDateTimeAsString(),
+	).Scan(
+		&user.ID,
+		&user.Name,
+		&user.Email,
+		&user.ProfilePic,
+		&user.CreatedAt,
+		&user.UpdatedAt,
+	)
 
-		if err != nil {
-			return nil, http.StatusInternalServerError, fmt.Errorf("error creating user profile: %w", err)
-		}
+	if err != nil {
+		return nil, http.StatusInternalServerError, fmt.Errorf("error creating user profile: %w", err)
 	}
 
 	// Generate tokens

@@ -89,4 +89,6 @@ func handleFunctions(mux *http.ServeMux) {
 
 	//* Admin routes
 	mux.HandleFunc("GET /api/v1/admin/users", middleware.LoggingMiddleware(handlers.GetAllUsersController))
+	mux.HandleFunc("POST /api/v1/dev/email", middleware.LoggingMiddleware(handlers.SendBasicEmailHandler))
+	mux.HandleFunc("POST /api/v1/dev/html_email", middleware.LoggingMiddleware(handlers.SendBasicHTMLEmailHandler))
 }

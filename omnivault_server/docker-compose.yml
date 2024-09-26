@@ -4,6 +4,7 @@ services:
     build: ./
     environment:
       DATABASE_URL: "host=omnivault_db user=postgres password=postgres dbname=postgres sslmode=disable"
+      # DATABASE_URL: "host=omnivault_db user=postgres password=postgres dbname=postgres sslmode=disable"
     ports:
       - "5060:5060"
     depends_on:

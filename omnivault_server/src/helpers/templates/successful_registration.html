@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to {{ ProductName }}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    p {
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome to {{ .ProductName }}!</h2>
+    <p>Thank you for joining {{ .ProductName }}. We're excited to have you as part of our community.</p>
+  </div>
+</body>
+</html>

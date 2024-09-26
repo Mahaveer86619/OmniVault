@@ -16,6 +16,8 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  
+
   final List<Widget> pages = [
     const NotesScreen(),
     const TasksScreen(),
@@ -40,7 +42,6 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      top: false,
       child: Scaffold(
         body: BlocBuilder<NavigationBloc, NavigationState>(
           builder: (context, state) {

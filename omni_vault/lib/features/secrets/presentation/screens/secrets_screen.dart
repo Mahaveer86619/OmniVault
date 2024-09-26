@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:omni_vault/common/app_constants/app_constants.dart';
 import 'package:omni_vault/common/widgets/app_bar.dart';
+import 'package:omni_vault/common/widgets/text_field.dart';
+import 'package:omni_vault/core/theme/pallete.dart';
 import 'package:omni_vault/features/secrets/presentation/bloc/secrets_bloc.dart';
 
 class SecretsScren extends StatefulWidget {
@@ -11,6 +15,8 @@ class SecretsScren extends StatefulWidget {
 }
 
 class _SecretsScrenState extends State<SecretsScren> {
+  final _searchController = TextEditingController();
+
   void _changeScreen(
     String routeName, {
     Map<String, dynamic>? arguments,
@@ -62,21 +68,45 @@ class _SecretsScrenState extends State<SecretsScren> {
 
   _buildAppBar(BuildContext context) {
     return MyAppBar(
-      title: 'Secrets',
+      leading: GestureDetector(
+        onTap: () {},
+        child: const Icon(Icons.menu),
+      ),
+      title: MySearchBar(
+        hintText: 'Search your secrets',
+        controller: _searchController,
+        validator: (value) {
+          return null;
+        },
+      ),
       actions: [
         IconButton(
           onPressed: () {},
-          icon: Icon(
-            Icons.search,
-            color: Theme.of(context).colorScheme.onSurface,
+          icon: SvgPicture.asset(
+            'assets/icons/other/menu_dark.svg',
+            width: 22,
+            height: 22,
+            theme: SvgTheme(
+              currentColor: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
         ),
-        const SizedBox(width: 12),
-        IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.outbox,
-            color: Theme.of(context).colorScheme.onSurface,
+        Container(
+          width: 1,
+          height: 38,
+          margin: const EdgeInsets.only(right: 12),
+          decoration: BoxDecoration(
+            color: Pallete.greyColor.withAlpha(70),
+          ),
+        ),
+        Container(
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+          ),
+          width: 38,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: Image.network(defaultAvatarUrl),
           ),
         ),
       ],

@@ -49,7 +49,7 @@ flutter:
   assets:
     - assets/images/
     - assets/app_logo/
-    - assets/icons/
+    - assets/icons/other/
     - assets/icons/bottom_bar/
     - .env
 

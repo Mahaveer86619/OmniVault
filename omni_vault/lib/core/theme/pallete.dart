@@ -18,7 +18,7 @@ class Pallete {
   static const Color errorColor = Colors.redAccent;
   static const Color transparentColor = Colors.transparent;
 
-  static const Color surface = Color(0xFF212124);
+  static const Color surface = Color(0xFF252529);
   static const Color onSurface = Color(0xFFE2E2EA);
   static const Color background = Color(0xFF1B1B1F);
   static const Color onBackground = Color(0xFFE2E2EA);
