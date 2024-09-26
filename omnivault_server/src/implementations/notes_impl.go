@@ -21,6 +21,7 @@ func CreateNote(note *types.NoteBody) (*types.NoteResponse, int, error) {
 
 	var noteResp types.Note
 	id := uuid.New().String()
+	tags := types.GenTagStringFromTags(note.Tags)
 
 	if err := conn.QueryRow(
 		query,
@@ -29,7 +30,7 @@ func CreateNote(note *types.NoteBody) (*types.NoteResponse, int, error) {
 		note.Title,
 		note.Content,
 		note.Color,
-		note.Tags,
+		tags,
 		note.CoverImageUrl,
 		helpers.GetCurrentDateTimeAsString(),
 		helpers.GetCurrentDateTimeAsString(),
@@ -138,6 +139,11 @@ func UpdateNote(noteBody *types.NoteUpdateBody) (*types.NoteResponse, int, error
 	  FROM notes
 	  WHERE id = $1
 	`
+	update_query := `
+		UPDATE notes
+		SET title = $1, content = $2, color = $3, tags = $4, cover_image_url = $5
+		WHERE id = $6 RETURNING *
+	`
 
 	var note types.Note
 	if err := conn.QueryRow(
@@ -159,21 +165,27 @@ func UpdateNote(noteBody *types.NoteUpdateBody) (*types.NoteResponse, int, error
 		}
 		return nil, http.StatusInternalServerError, fmt.Errorf("error scanning row: %w", err)
 	}
+	
+	tags := types.GenTagStringFromTags(noteBody.Tags)
 
-	update_query := `
-		UPDATE notes
-		SET title = $1, content = $2, color = $3, tags = $4, cover_image_url = $5
-		WHERE id = $6 RETURNING *
-	`
-
-	_, err := conn.Exec(
+	err := conn.QueryRow(
 		update_query,
-		note.Title,
-		note.Content,
-		note.Color,
-		note.Tags,
-		note.CoverImageUrl,
+		noteBody.Title,
+		noteBody.Content,
+		noteBody.Color,
+		tags,
+		noteBody.CoverImageUrl,
 		note.ID,
+	).Scan(
+		&note.ID,
+		&note.UserID,
+		&note.Title,
+		&note.Content,
+		&note.Color,
+		&note.Tags,
+		&note.CoverImageUrl,
+		&note.CreatedAt,
+		&note.UpdatedAt,
 	)
 
 	if err != nil {

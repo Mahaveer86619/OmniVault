@@ -1,5 +1,7 @@
 package types
 
+import "strings"
+
 type Note struct {
 	ID            string `json:"id"`
 	UserID        string `json:"user_id"`
@@ -13,31 +15,31 @@ type Note struct {
 }
 
 type NoteBody struct {
-	UserID        string `json:"user_id"`
-	Title         string `json:"title"`
-	Content       string `json:"content"`
-	Color         string `json:"color"`
-	Tags          string `json:"tags"`
-	CoverImageUrl string `json:"cover_image_url"`
+	UserID        string   `json:"user_id"`
+	Title         string   `json:"title"`
+	Content       string   `json:"content"`
+	Color         string   `json:"color"`
+	Tags          []string `json:"tags"`
+	CoverImageUrl string   `json:"cover_image_url"`
 }
 
 type NoteUpdateBody struct {
-	ID            string `json:"id"`
-	Title         string `json:"title"`
-	Content       string `json:"content"`
-	Color         string `json:"color"`
-	Tags          string `json:"tags"`
-	CoverImageUrl string `json:"cover_image_url"`
+	ID            string   `json:"id"`
+	Title         string   `json:"title"`
+	Content       string   `json:"content"`
+	Color         string   `json:"color"`
+	Tags          []string `json:"tags"`
+	CoverImageUrl string   `json:"cover_image_url"`
 }
 
 type NoteResponse struct {
-	ID            string `json:"id"`
-	UserID        string `json:"user_id"`
-	Title         string `json:"title"`
-	Content       string `json:"content"`
-	Color         string `json:"color"`
-	Tags          string `json:"tags"`
-	CoverImageUrl string `json:"cover_image_url"`
+	ID            string   `json:"id"`
+	UserID        string   `json:"user_id"`
+	Title         string   `json:"title"`
+	Content       string   `json:"content"`
+	Color         string   `json:"color"`
+	Tags          []string `json:"tags"`
+	CoverImageUrl string   `json:"cover_image_url"`
 }
 
 func GenNoteResponseFromNote(n Note) *NoteResponse {
@@ -47,9 +49,17 @@ func GenNoteResponseFromNote(n Note) *NoteResponse {
 		Title:         n.Title,
 		Content:       n.Content,
 		Color:         n.Color,
-		Tags:          n.Tags,
+		Tags:          GenTagsFromTagString(n.Tags),
 		CoverImageUrl: n.CoverImageUrl,
 	}
 
 	return resp
+}
+
+func GenTagStringFromTags(tags []string) string {
+	return strings.Join(tags, "|")
+}
+
+func GenTagsFromTagString(tags string) []string {
+	return strings.Split(tags, "|")
 }

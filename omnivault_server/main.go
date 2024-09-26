@@ -82,11 +82,15 @@ func handleFunctions(mux *http.ServeMux) {
 
 	//* User routes
 	mux.Handle("GET /api/v1/users", middleware.AuthMiddleware(http.HandlerFunc(handlers.GetUserByIDController)))
-	mux.Handle("PUT /api/v1/users", middleware.AuthMiddleware(http.HandlerFunc(handlers.UpdateUserController)))
+	mux.Handle("PATCH /api/v1/users", middleware.AuthMiddleware(http.HandlerFunc(handlers.UpdateUserController)))
 	mux.Handle("DELETE /api/v1/users", middleware.AuthMiddleware(http.HandlerFunc(handlers.DeleteUserController)))
 
 	//* Notes routes
-	// mux.Handle("GET /api/v1/notes", middleware.AuthMiddleware(http.HandlerFunc(handlers.GetAllNotesController)))
+	mux.Handle("POST /api/v1/notes", middleware.AuthMiddleware(http.HandlerFunc(handlers.CreateNoteHandler)))
+	mux.Handle("GET /api/v1/notes", middleware.AuthMiddleware(http.HandlerFunc(handlers.GetAllNotesHandler)))
+	mux.Handle("GET /api/v1/notes/id", middleware.AuthMiddleware(http.HandlerFunc(handlers.GetNoteByIdHandler)))
+	mux.Handle("PATCH /api/v1/notes/id", middleware.AuthMiddleware(http.HandlerFunc(handlers.UpdateNoteHandler)))
+	mux.Handle("DELETE /api/v1/notes/id", middleware.AuthMiddleware(http.HandlerFunc(handlers.DeleteNoteHandler)))
 
 	//* Admin routes
 	mux.HandleFunc("GET /api/v1/admin/users", middleware.LoggingMiddleware(handlers.GetAllUsersController))
